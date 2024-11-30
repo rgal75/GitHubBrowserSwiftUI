@@ -44,7 +44,12 @@ let project = Project(
             product: .framework,
             bundleId: "hu.galiasys.GitHubClient",
             sources: ["GitHubClient/Sources/**"],
-            resources: ["GitHubClient/Resources/**"],
+            resources: [.glob(
+                pattern: "GitHubClient/Resources/**",
+                excluding: [
+                    "GitHubClient/Resources/*.yaml"
+                ]
+            )], // ["GitHubClient/Resources/**"],
             scripts: [
                 .pre(
                     script: """

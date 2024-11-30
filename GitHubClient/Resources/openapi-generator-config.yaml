@@ -4,6 +4,6 @@ generate:
 accessModifier: public
 
 filter:
-  tags:
-    - search
+  paths:
+    - /search/repositories
 
