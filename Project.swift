@@ -14,6 +14,7 @@ let project = Project(
             destinations: .iOS,
             product: .app,
             bundleId: "hu.galiasys.SUIGitHubBrowser",
+            deploymentTargets: .iOS("17.0"),
             infoPlist: .extendingDefault(
                 with: [
                     "UILaunchScreen": [
@@ -33,6 +34,7 @@ let project = Project(
             destinations: .iOS,
             product: .unitTests,
             bundleId: "hu.galiasys.SUIGitHubBrowserTests",
+            deploymentTargets: .iOS("17.0"),
             infoPlist: .default,
             sources: ["SUIGitHubBrowser/Tests/**"],
             resources: [],
@@ -43,6 +45,7 @@ let project = Project(
             destinations: .iOS,
             product: .framework,
             bundleId: "hu.galiasys.GitHubClient",
+            deploymentTargets: .iOS("17.0"),
             sources: ["GitHubClient/Sources/**"],
             resources: [.glob(
                 pattern: "GitHubClient/Resources/**",
