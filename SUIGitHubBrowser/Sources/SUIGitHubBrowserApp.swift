@@ -4,7 +4,8 @@ import SwiftUI
 struct SUIGitHubBrowserApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RepositoryListView()
+                .environment(RepositoryListViewModel.create())
         }
     }
 }

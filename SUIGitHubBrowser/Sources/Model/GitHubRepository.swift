@@ -10,4 +10,5 @@ import Foundation
 struct GitHubRepository: Identifiable {
     var id: Int
     let name: String
+    let url: URL
 }
