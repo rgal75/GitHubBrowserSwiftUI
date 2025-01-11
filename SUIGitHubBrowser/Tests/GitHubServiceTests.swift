@@ -3,7 +3,7 @@ import GitHubClient
 import OpenAPIURLSession
 import Testing
 
-final class SUIGitHubBrowserTests {
+final class GitHubServiceTests {
     @Test("2 + 2 = 4")
     func addition() async throws {
         #expect(2 + 2 == 4)

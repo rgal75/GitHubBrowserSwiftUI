@@ -164,7 +164,6 @@ class GitHubService {
 
 private actor StubbedClientTransport: ClientTransport {
     private var responses: [ConfigurableResponse<(HTTPResponse, HTTPBody?), Error>]
-    private var task: Task<(HTTPResponse, HTTPBody?), Error>?
     
     init(responses: [ConfigurableResponse<(HTTPResponse, HTTPBody?), Error>]) {
         self.responses = responses
@@ -178,25 +177,16 @@ private actor StubbedClientTransport: ClientTransport {
     ) async throws -> (HTTPResponse, HTTPBody?) {
         print("Sending search request: \(request)")
         let stubbedResponse = responses.isEmpty ? .pending : responses.removeFirst()
-        if let task {
-            return try await task.value
+
+        switch stubbedResponse {
+        case .success(let apiResponse):
+            print("Received search response: \(apiResponse)")
+            return apiResponse
+        case .failure(error: let error):
+            throw error
+        case .pending:
+            try await Task.sleep(for: .seconds(2))
+            throw GitHubError.timeout
         }
-        
-        let newTask: Task<(HTTPResponse, HTTPBody?), Error> = Task {
-            switch stubbedResponse {
-            case .success(let response):
-                return response
-            case .failure(error: let error):
-                throw error
-            case .pending:
-                try await Task.sleep(for: .milliseconds(1000))
-                throw GitHubError.timeout
-            }
-        }
-        task = newTask
-        let apiResponse = try await newTask.value
-        task = nil
-        print("Received search response: \(apiResponse)")
-        return apiResponse
     }
 }
